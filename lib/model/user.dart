@@ -5,34 +5,34 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @immutable
 class User {
-  String name;
-  int age;
+  String? name;
+  int? id;
   User({
-    required this.name,
-    required this.age,
+    this.name,
+    this.id,
   });
 
   User copyWith({
     String? name,
-    int? age,
+    int? id,
   }) {
     return User(
       name: name ?? this.name,
-      age: age ?? this.age,
+      id: id ?? this.id,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'age': age,
+      'id': id,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       name: map['name'] ?? '',
-      age: map['age']?.toInt() ?? 0,
+      id: map['id']?.toInt() ?? 0,
     );
   }
 
@@ -41,7 +41,7 @@ class User {
   factory User.fromJson(String source) => User.fromMap(json.decode(source));
 
   @override
-  String toString() => 'User(name: $name, age: $age)';
+  String toString() => 'User(name: $name, id: $id)';
 
   @override
   bool operator ==(Object other) {
@@ -49,21 +49,21 @@ class User {
 
     return other is User &&
         other.name == name &&
-        other.age == age;
+        other.id == id;
   }
 
   @override
-  int get hashCode => name.hashCode ^ age.hashCode;
+  int get hashCode => name.hashCode ^ id.hashCode;
 }
 
 class UserNotifier extends StateNotifier<User> {
-  UserNotifier() : super(User(name: '', age: 0));
+  UserNotifier() : super(User(name: '', id: 0));
 
   void updateName(String n) {
     state = state.copyWith(name: n);
   }
 
-  void updateAge(int a) {
-    state = state.copyWith(age: a);
+  void updateId(int a) {
+    state = state.copyWith(id: a);
   }
 }
